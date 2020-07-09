@@ -1,13 +1,4 @@
-2020-06-22 19:06:41,244 ERROR: Exception on /edit_profile [POST]             [in /home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py: 1892]
-Traceback (most recent call last):
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1284, in _execute_context
-    cursor, statement, parameters, context
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
-    cursor.execute(statement, parameters)
-sqlite3.IntegrityError: UNIQUE constraint failed: user.username
-
-The above exception was the direct cause of the following exception:
-
+2020-07-04 19:27:21,631 ERROR: Exception on / [GET] [in /home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -23,67 +14,77 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/cat/Dev/microblog/app/routes.py", line 88, in edit_profile
-    db.session.commit()
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/scoping.py", line 163, in do
-    return getattr(self.registry(), name)(*args, **kwargs)
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 1042, in commit
-    self.transaction.commit()
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 504, in commit
-    self._prepare_impl()
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 483, in _prepare_impl
-    self.session.flush()
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2523, in flush
-    self._flush(objects)
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2664, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 69, in __exit__
-    exc_value, with_traceback=exc_tb,
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 178, in raise_
-    raise exception
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/session.py", line 2624, in _flush
-    flush_context.execute()
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
-    rec.execute(self)
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
-    uow,
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 236, in save_obj
-    update,
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/persistence.py", line 995, in _emit_update_statements
-    statement, multiparams
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1020, in execute
-    return meth(self, multiparams, params)
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
-    return connection._execute_clauseelement(self, multiparams, params)
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_clauseelement
-    distilled_params,
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1324, in _execute_context
-    e, statement, parameters, cursor, context
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1518, in _handle_dbapi_exception
-    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 178, in raise_
-    raise exception
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1284, in _execute_context
-    cursor, statement, parameters, context
-  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
-[SQL: UPDATE user SET username=?, about_me=? WHERE user.id = ?]
-[parameters: ('susan', 'I like cats', 2)]
-(Background on this error at: http://sqlalche.me/e/gkpj)
-2020-07-04 16:37:50,225 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 16:38:17,255 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 16:38:43,852 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 16:38:58,124 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 16:42:25,383 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 17:57:38,040 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 17:58:53,800 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 18:00:33,544 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 18:00:57,178 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 18:01:03,887 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 19:13:23,638 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 19:13:41,169 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 19:26:04,470 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 19:26:10,570 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 19:26:48,772 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
-2020-07-04 19:26:59,485 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
+  File "/home/cat/Dev/microblog/app/routes.py", line 47, in index
+    prev_url=prev_url)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/templating.py", line 140, in render_template
+    ctx.app,
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/templating.py", line 120, in _render
+    rv = template.render(context)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 1090, in render
+    self.environment.handle_exception()
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/jinja2/environment.py", line 832, in handle_exception
+    reraise(*rewrite_traceback_stack(source=source))
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 28, in reraise
+    raise value.with_traceback(tb)
+  File "/home/cat/Dev/microblog/app/templates/index.html", line 2, in top-level template code
+    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/home/cat/Dev/microblog/app/templates/base.html", line 1, in top-level template code
+    {% extends 'bootstrap/base.html' %}
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
+    {% block doc -%}
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 4, in block "doc"
+    {%- block html %}
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 20, in block "html"
+    {% block body -%}
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 23, in block "body"
+    {% block content -%}
+  File "/home/cat/Dev/microblog/app/templates/base.html", line 48, in block "content"
+    {% block app_content %}{% endblock %}
+  File "/home/cat/Dev/microblog/app/templates/index.html", line 11, in block "app_content"
+    {% include '_post.html' %}
+  File "/home/cat/Dev/microblog/app/templates/_post.html", line 4, in top-level template code
+    <a href="{{ url_for('main.user', username=post.author.username) }}">
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/helpers.py", line 370, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 2216, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/helpers.py", line 358, in url_for
+    endpoint, values, method=method, force_external=external
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 2179, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'main.user' with values ['username']. Did you mean 'user' instead?
+2020-07-04 19:28:52,518 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
+2020-07-04 19:40:12,142 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:52]
+2020-07-05 17:28:57,336 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-05 17:29:41,263 ERROR: Exception on /search [GET] [in /home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/cat/Dev/microblog/app/main/routes.py", line 152, in search
+    posts, total = Post.search(g.search_form.q.data, page,
+AttributeError: type object 'Post' has no attribute 'search'
+2020-07-05 17:34:56,071 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-05 17:53:21,994 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-05 17:56:06,272 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:54:00,852 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:54:12,338 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:54:27,773 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:55:50,501 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:55:56,537 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:55:59,662 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 20:41:45,302 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 20:42:32,238 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]

@@ -5,10 +5,11 @@ from flask_login import current_user, login_required
 from flask_babel import _, get_locale
 from guess_language import guess_language
 from app import db
-from app.main.forms import EditProfileForm, EmptyForm, PostForm, SearchForm
-from app.models import User, Post
+from app.main.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, MessageForm
+from app.models import User, Post, Message
 from app.translate import translate
 from app.main import bp
+
 
 
 @bp.before_app_request
@@ -43,8 +44,8 @@ def index():
     prev_url = url_for('main.index', page=posts.prev_num) \
         if posts.has_prev else None
     return render_template('index.html', title=_('Home'), form=form,
-                           posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
+                            posts=posts.items, next_url=next_url,
+                            prev_url=prev_url)
 
 
 @bp.route('/explore')
@@ -58,8 +59,8 @@ def explore():
     prev_url = url_for('main.explore', page=posts.prev_num) \
         if posts.has_prev else None
     return render_template('index.html', title=_('Explore'),
-                           posts=posts.items, next_url=next_url,
-                           prev_url=prev_url)
+                            posts=posts.items, next_url=next_url,
+                            prev_url=prev_url)
 
 
 @bp.route('/user/<username>')
@@ -70,12 +71,12 @@ def user(username):
     posts = user.posts.order_by(Post.timestamp.desc()).paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
     next_url = url_for('main.user', username=user.username,
-                       page=posts.next_num) if posts.has_next else None
+                        page=posts.next_num) if posts.has_next else None
     prev_url = url_for('main.user', username=user.username,
-                       page=posts.prev_num) if posts.has_prev else None
+                        page=posts.prev_num) if posts.has_prev else None
     form = EmptyForm()
     return render_template('user.html', user=user, posts=posts.items,
-                           next_url=next_url, prev_url=prev_url, form=form)
+                            next_url=next_url, prev_url=prev_url, form=form)
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
@@ -92,7 +93,7 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title=_('Edit Profile'),
-                           form=form)
+                            form=form)
 
 
 @bp.route('/follow/<username>', methods=['POST'])
@@ -139,8 +140,8 @@ def unfollow(username):
 @login_required
 def translate_text():
     return jsonify({'text': translate(request.form['text'],
-                                      request.form['source_language'],
-                                      request.form['dest_language'])})
+                                        request.form['source_language'],
+                                        request.form['dest_language'])})
 
 
 @bp.route('/search')
@@ -150,10 +151,41 @@ def search():
         return redirect(url_for('main.explore'))
     page = request.args.get('page', 1, type=int)
     posts, total = Post.search(g.search_form.q.data, page,
-                               current_app.config['POSTS_PER_PAGE'])
+                                current_app.config['POSTS_PER_PAGE'])
     next_url = url_for('main.search', q=g.search_form.q.data, page=page + 1) \
         if total > page * current_app.config['POSTS_PER_PAGE'] else None
     prev_url = url_for('main.search', q=g.search_form.q.data, page=page - 1) \
         if page > 1 else None
     return render_template('search.html', title=_('Search'), posts=posts,
-                           next_url=next_url, prev_url=prev_url)
+                            next_url=next_url, prev_url=prev_url)
+
+
+@bp.route('/send_message/<recipient>', methods=['GET', 'POST'])
+@login_required
+def send_message(recipient):
+    user = User.query.filter_by(username=recipient).first_or_404()
+    form = MessageForm()
+    if form.validate_on_submit():
+        msg = Message(author=current_user, recipient=user, body=form.message.data)
+        db.session.add(msg)
+        db.session.commit()
+        flash(_("Your message has been sent."))
+        return redirect(url_for('main.user', username=recipient))
+    return render_template('send_message.html', title=_('Send Message'),form=form, recipient=recipient)
+
+
+@bp.route('/messages')
+@login_required
+def messages():
+    current_user.last_message_read_time = datetime.utcnow()
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    messages = current_user.messages_received.order_by(
+        Message.timestamp.desc()).paginate(
+            page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('main.messages', page=messages.next_num) \
+        if messages.has_next else None
+    prev_url = url_for('main.messages', page=messages.prev_num) \
+        if messages.has_prev else None
+    return render_template('messages.html', messages=messages.items,
+                            next_url=next_url, prev_url=prev_url)
