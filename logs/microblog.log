@@ -79,3 +79,10 @@ Traceback (most recent call last):
 AttributeError: type object 'Post' has no attribute 'search'
 2020-07-05 17:34:56,071 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
 2020-07-05 17:53:21,994 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-05 17:56:06,272 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:54:00,852 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:54:12,338 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:54:27,773 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:55:50,501 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:55:56,537 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-09 19:55:59,662 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
