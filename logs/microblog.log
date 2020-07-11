@@ -1,4 +1,4 @@
-2020-07-09 20:45:18,678 ERROR: Exception on / [GET] [in /home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py:1892]
+2020-07-11 18:26:33,523 ERROR: Exception on /user/susan [GET] [in /home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py:1892]
 Traceback (most recent call last):
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
     response = self.full_dispatch_request()
@@ -14,8 +14,8 @@ Traceback (most recent call last):
     return self.view_functions[rule.endpoint](**req.view_args)
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_login/utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "/home/cat/Dev/microblog/app/main/routes.py", line 48, in index
-    prev_url=prev_url)
+  File "/home/cat/Dev/microblog/app/main/routes.py", line 79, in user
+    next_url=next_url, prev_url=prev_url, form=form)
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/templating.py", line 140, in render_template
     ctx.app,
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/templating.py", line 120, in _render
@@ -26,8 +26,8 @@ Traceback (most recent call last):
     reraise(*rewrite_traceback_stack(source=source))
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/jinja2/_compat.py", line 28, in reraise
     raise value.with_traceback(tb)
-  File "/home/cat/Dev/microblog/app/templates/index.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
+  File "/home/cat/Dev/microblog/app/templates/user.html", line 1, in top-level template code
+    {% extends "base.html" %}
   File "/home/cat/Dev/microblog/app/templates/base.html", line 1, in top-level template code
     {% extends 'bootstrap/base.html' %}
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 1, in top-level template code
@@ -38,7 +38,7 @@ Traceback (most recent call last):
     {% block body -%}
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_bootstrap/templates/bootstrap/base.html", line 26, in block "body"
     {% block scripts %}
-  File "/home/cat/Dev/microblog/app/templates/base.html", line 136, in block "scripts"
+  File "/home/cat/Dev/microblog/app/templates/base.html", line 151, in block "scripts"
     $.ajax('{{ url_for('main.notifications') }}?since=' + since).done(
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/helpers.py", line 370, in url_for
     return appctx.app.handle_url_build_error(error, endpoint, values)
@@ -51,18 +51,67 @@ Traceback (most recent call last):
   File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/werkzeug/routing.py", line 2179, in build
     raise BuildError(endpoint, values, method, self)
 werkzeug.routing.BuildError: Could not build url for endpoint 'main.notifications'. Did you mean 'main.unfollow' instead?
-2020-07-09 20:46:05,769 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-09 20:46:35,921 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 17:47:14,768 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 17:48:16,858 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 17:51:32,899 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 17:54:35,693 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 17:55:22,848 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 17:55:38,662 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 17:55:56,395 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 17:56:45,222 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 18:00:31,835 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 18:02:46,130 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 18:04:37,494 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 18:04:50,053 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
-2020-07-11 18:04:59,405 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:77]
+2020-07-11 18:27:11,787 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:81]
+2020-07-11 18:27:19,282 INFO: Microblog startup [in ./app/__init__.py:81]
+2020-07-11 18:27:19,317 ERROR: Unhandled exception [in ./app/tasks.py:38]
+Traceback (most recent call last):
+  File "./app/tasks.py", line 27, in export_posts
+    _set_task_progress(0)
+  File "./app/tasks.py", line 17, in _set_task_progress
+    task.user.add_notification('task_progress', {'task_id': job.get_id(),
+AttributeError: 'User' object has no attribute 'add_notification'
+2020-07-11 18:29:21,809 INFO: Microblog startup [in /home/cat/Dev/microblog/app/__init__.py:86]
+2020-07-11 18:29:51,066 INFO: Microblog startup [in ./app/__init__.py:86]
+2020-07-11 18:30:01,077 ERROR: Exception on /notifications [GET] [in /home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py:1892]
+Traceback (most recent call last):
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1284, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.OperationalError: no such table: notification
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/flask_login/utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/cat/Dev/microblog/app/main/routes.py", line 227, in notifications
+    } for n in notifications])
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3481, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3506, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1020, in execute
+    return meth(self, multiparams, params)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_clauseelement
+    distilled_params,
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1324, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1518, in _handle_dbapi_exception
+    sqlalchemy_exception, with_traceback=exc_info[2], from_=e
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 178, in raise_
+    raise exception
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1284, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/cat/Dev/microblog/venv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 590, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: notification
+[SQL: SELECT notification.id AS notification_id, notification.name AS notification_name, notification.user_id AS notification_user_id, notification.timestamp AS notification_timestamp, notification.payload_json AS notification_payload_json 
+FROM notification 
+WHERE ? = notification.user_id AND notification.timestamp > ? ORDER BY notification.timestamp ASC]
+[parameters: (2, 0.0)]
+(Background on this error at: http://sqlalche.me/e/e3q8)
