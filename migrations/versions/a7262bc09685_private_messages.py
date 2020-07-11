@@ -1,7 +1,7 @@
 """private messages
 
 Revision ID: a7262bc09685
-Revises: af014e74313d
+Revises: d1ca2eda98b4
 Create Date: 2020-07-09 19:55:56.599575
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = 'a7262bc09685'
-down_revision = 'af014e74313d'
+down_revision = 'd1ca2eda98b4'
 branch_labels = None
 depends_on = None
 
